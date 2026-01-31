@@ -1,0 +1,17 @@
+import 'package:clothing_app/controllers/cart_controller.dart';
+
+import 'product.dart';
+
+class Order {
+  final String id;
+  final DateTime date;
+  final List<CartItem> items;
+  final double total;
+
+  Order({
+    required this.id,
+    required this.date,
+    required this.items,
+    required this.total,
+  });
+}
