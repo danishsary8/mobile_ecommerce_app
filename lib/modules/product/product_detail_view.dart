@@ -194,7 +194,7 @@ class _ProductDetailViewState extends State<ProductDetailView> {
                     Get.snackbar(
                       "Added to Cart",
                       "${product.name} added successfully!",
-                      snackPosition: SnackPosition.BOTTOM,
+                      snackPosition: SnackPosition.TOP,
                       backgroundColor: Colors.lightGreen,
                       margin: const EdgeInsets.all(12),
                     );

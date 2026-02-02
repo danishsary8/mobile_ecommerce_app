@@ -62,13 +62,10 @@ class _NotificationTile extends StatelessWidget {
             .markAsRead(notification);
 
         if (notification.invoice != null) {
-          Get.defaultDialog(
+          _showInvoiceDialog(
+            context,
             title: notification.title,
-            content: Text(notification.invoice!),
-            confirm: ElevatedButton(
-              onPressed: () => Get.back(),
-              child: const Text("OK"),
-            ),
+            invoice: notification.invoice!,
           );
         }
       },
@@ -85,14 +82,31 @@ class _NotificationTile extends StatelessWidget {
                 : AppColors.primary,
             width: 1.6,
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.06),
+              blurRadius: 10,
+              offset: const Offset(0, 6),
+            ),
+          ],
         ),
         child: Row(
           children: [
-            Icon(
-              Icons.notifications,
-              color: notification.isRead
-                  ? Colors.black54
-                  : AppColors.primary,
+            Container(
+              width: 42,
+              height: 42,
+              decoration: BoxDecoration(
+                color: notification.isRead
+                    ? Colors.black12
+                    : AppColors.primary.withOpacity(0.12),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: Icon(
+                Icons.notifications,
+                color: notification.isRead
+                    ? Colors.black54
+                    : AppColors.primary,
+              ),
             ),
             const SizedBox(width: 12),
             Expanded(
@@ -107,7 +121,12 @@ class _NotificationTile extends StatelessWidget {
                             : AppColors.primary,
                       )),
                   const SizedBox(height: 4),
-                  Text(notification.body),
+                  Text(
+                    notification.body,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(color: Colors.black87),
+                  ),
                   const SizedBox(height: 4),
                   Text(
                     _formatTime(notification.time),
@@ -143,6 +162,137 @@ class _NotificationTile extends StatelessWidget {
     } else {
       return "${diff.inDays} days ago";
     }
+  }
+
+  static void _showInvoiceDialog(
+      BuildContext context, {
+        required String title,
+        required String invoice,
+      }) {
+    Get.generalDialog(
+      barrierLabel: "invoice",
+      barrierDismissible: true,
+      barrierColor: Colors.black.withOpacity(0.5),
+      transitionDuration: const Duration(milliseconds: 250),
+      pageBuilder: (context, _, __) {
+        return SafeArea(
+          child: Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 12,
+              ),
+              child: Material(
+                color: Colors.transparent,
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(18),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.18),
+                        blurRadius: 20,
+                        offset: const Offset(0, 10),
+                      ),
+                    ],
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Container(
+                              width: 38,
+                              height: 38,
+                              decoration: BoxDecoration(
+                                color: AppColors.primary.withOpacity(0.12),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: const Icon(
+                                Icons.receipt_long,
+                                color: AppColors.primary,
+                              ),
+                            ),
+                            const SizedBox(width: 12),
+                            Expanded(
+                              child: Text(
+                                title,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                            IconButton(
+                              onPressed: () => Get.back(),
+                              icon: const Icon(Icons.close),
+                              splashRadius: 20,
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 12),
+                        Container(
+                          width: double.infinity,
+                          padding: const EdgeInsets.all(14),
+                          decoration: BoxDecoration(
+                            color: Colors.grey.shade100,
+                            borderRadius: BorderRadius.circular(12),
+                            border: Border.all(color: Colors.black12),
+                          ),
+                          child: Text(
+                            invoice,
+                            style: const TextStyle(height: 1.4),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: OutlinedButton(
+                                onPressed: () => Get.back(),
+                                child: const Text("Close"),
+                              ),
+                            ),
+                            const SizedBox(width: 10),
+                            Expanded(
+                              child: ElevatedButton(
+                                onPressed: () => Get.back(),
+                                child: const Text("Got it"),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+      transitionBuilder: (context, animation, _, child) {
+        final slide = Tween<Offset>(
+          begin: const Offset(0, -0.25),
+          end: Offset.zero,
+        ).animate(CurvedAnimation(
+          parent: animation,
+          curve: Curves.easeOutCubic,
+        ));
+        return SlideTransition(
+          position: slide,
+          child: FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
+      },
+    );
   }
 }
 
