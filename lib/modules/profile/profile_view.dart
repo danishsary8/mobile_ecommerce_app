@@ -10,55 +10,91 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
         title: const Text(
-          'Profile Account',
-          style: TextStyle(fontWeight: FontWeight.bold),
+          'Profile',
+          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
         ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.black12.withValues(alpha: 0.06)),
+        ),
       ),
       body: SafeArea(
         child: ListView(
-          padding: const EdgeInsets.all(20),
+          padding: const EdgeInsets.all(16),
           children: [
             // ===== Profile Header =====
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.grey.shade100,
-                borderRadius: BorderRadius.circular(18),
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withValues(alpha: 0.05),
+                    blurRadius: 14,
+                    offset: const Offset(0, 6),
+                  ),
+                ],
               ),
               child: Row(
                 children: [
-                  CircleAvatar(
-                    radius: 34,
-                    backgroundColor: const Color(0xFFEFEAFF),
-                    backgroundImage: const AssetImage("assets/images/pfp.jpg"),
+                  // 👤 Profile Image Avatar
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(999),
+                    child: Container(
+                      width: 70,
+                      height: 70,
+                      color: Colors.grey.shade200,
+                      child: Image.asset(
+                        "assets/images/profile.jpg", // ✅ change path if needed
+                        fit: BoxFit.cover,
+                        errorBuilder: (_, __, ___) => const Icon(
+                          Icons.person,
+                          size: 34,
+                          color: AppColors.primary,
+                        ),
+                      ),
+                    ),
                   ),
+
                   const SizedBox(width: 14),
-                  Expanded(
+
+                  const Expanded(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: const [
+                      children: [
                         Text(
                           "Danish",
                           style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w900,
                             fontSize: 16,
+                            color: Colors.black87,
                           ),
                         ),
-                        SizedBox(height: 4),
+                        SizedBox(height: 6),
                         Text(
                           "081669444",
-                          style: TextStyle(color: Colors.black54),
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                       ],
                     ),
                   ),
+
+                  // Edit icon
                   Container(
                     padding: const EdgeInsets.all(10),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: const Color(0xFFF2F2F6),
                       borderRadius: BorderRadius.circular(14),
                     ),
                     child: const Icon(
@@ -73,12 +109,12 @@ class ProfileView extends StatelessWidget {
 
             const SizedBox(height: 22),
 
-            // ===== Settings Title =====
             const Text(
               "Account",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
                 fontSize: 16,
+                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 12),
@@ -104,8 +140,9 @@ class ProfileView extends StatelessWidget {
             const Text(
               "More",
               style: TextStyle(
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w900,
                 fontSize: 16,
+                color: Colors.black87,
               ),
             ),
             const SizedBox(height: 12),
@@ -126,13 +163,14 @@ class ProfileView extends StatelessWidget {
               onTap: () {},
             ),
 
-            const SizedBox(height: 24),
+            const SizedBox(height: 22),
 
             // ===== Sign Out Button =====
             SizedBox(
               height: 52,
               child: OutlinedButton.icon(
                 style: OutlinedButton.styleFrom(
+                  backgroundColor: Colors.white,
                   side: const BorderSide(color: Colors.redAccent),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(16),
@@ -146,7 +184,8 @@ class ProfileView extends StatelessWidget {
                   "Sign Out",
                   style: TextStyle(
                     color: Colors.redAccent,
-                    fontWeight: FontWeight.w600,
+                    fontWeight: FontWeight.w800,
+                    fontSize: 15,
                   ),
                 ),
               ),
@@ -165,25 +204,37 @@ class ProfileView extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
-        color: Colors.grey.shade100,
-        borderRadius: BorderRadius.circular(16),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(18),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: 0.04),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
       ),
       child: ListTile(
         onTap: onTap,
+        contentPadding: const EdgeInsets.symmetric(horizontal: 14, vertical: 4),
         leading: Container(
           width: 44,
           height: 44,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFFF2F2F6),
             borderRadius: BorderRadius.circular(14),
           ),
           child: Icon(icon, color: AppColors.primary),
         ),
         title: Text(
           title,
-          style: const TextStyle(fontWeight: FontWeight.w600),
+          style: const TextStyle(
+            fontWeight: FontWeight.w800,
+            fontSize: 15,
+            color: Colors.black87,
+          ),
         ),
-        trailing: const Icon(Icons.chevron_right),
+        trailing: const Icon(Icons.chevron_right, color: Colors.black45),
       ),
     );
   }

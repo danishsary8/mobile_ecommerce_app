@@ -1,40 +1,55 @@
-import 'package:clothing_app/controllers/notifications_controller.dart';
-import 'package:clothing_app/controllers/orders_controller.dart';
-import 'package:clothing_app/controllers/wishlist_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
+import 'controllers/atelier_controller.dart';
+import 'controllers/cart_controller.dart';
+import 'controllers/notifications_controller.dart';
+import 'controllers/orders_controller.dart';
+import 'controllers/wishlist_controller.dart';
+import 'core/theme/app_theme.dart';
 import 'routes/app_pages.dart';
 import 'routes/app_routes.dart';
-import 'package:get_storage/get_storage.dart';
-import 'theme.dart';
-
-// 👇 Import your controller
-import 'controllers/cart_controller.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 👇 Register CartController once at app start
+  // Edge to edge transparent system navigation
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.dark,
+      systemNavigationBarColor: Colors.transparent,
+      systemNavigationBarIconBrightness: Brightness.dark,
+    ),
+  );
+
+  await GetStorage.init();
+
+  // Initialize Atelier controller
+  Get.put(AtelierController());
+
+  // Legacy controllers for backward compatibility
   Get.put(CartController());
   Get.put(WishlistController());
   Get.put(OrdersController());
   Get.put(NotificationsController());
 
-
-  await GetStorage.init(); // initialize storage
-  runApp(const ClothingApp());
+  runApp(const AtelierApp());
 }
 
-class ClothingApp extends StatelessWidget {
-  const ClothingApp({super.key});
+class AtelierApp extends StatelessWidget {
+  const AtelierApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Clothing App',
-      theme: AppTheme.light,
+      title: 'ATELIER Haute Couture',
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.light,
       initialRoute: AppRoutes.splash,
       getPages: AppPages.pages,
     );

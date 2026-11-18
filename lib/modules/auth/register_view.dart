@@ -31,63 +31,97 @@ class _RegisterViewState extends State<RegisterView> {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
         elevation: 0,
-        backgroundColor: theme.colorScheme.surface,
-        foregroundColor: theme.colorScheme.onSurface,
+        foregroundColor: Colors.black87,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.black12.withValues(alpha: 0.06)),
+        ),
       ),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Create Account',
-                style: theme.textTheme.headlineSmall?.copyWith(
-                  fontWeight: FontWeight.bold,
+              const Text(
+                "Create Account ✨",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black87,
                 ),
               ),
-              const SizedBox(height: 24),
-
-              AppInput(
-                hint: 'First name',
-                controller: firstNameController,
+              const SizedBox(height: 6),
+              Text(
+                "Fill in your details to get started.",
+                style: theme.textTheme.bodyMedium?.copyWith(
+                  color: Colors.black54,
+                ),
               ),
-              const SizedBox(height: 14),
+              const SizedBox(height: 22),
 
-              AppInput(
-                hint: 'Last name',
-                controller: lastNameController,
-              ),
-              const SizedBox(height: 14),
+              // Form Card
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withValues(alpha: 0.05),
+                      blurRadius: 16,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  children: [
+                    AppInput(
+                      hint: 'First name',
+                      controller: firstNameController,
+                    ),
+                    const SizedBox(height: 14),
+                    AppInput(
+                      hint: 'Last name',
+                      controller: lastNameController,
+                    ),
+                    const SizedBox(height: 14),
 
-              AppInput(
-                hint: 'Phone Number address',
-                controller: phoneController,
-              ),
-              const SizedBox(height: 14),
+                    // UI text only (controller unchanged)
+                    AppInput(
+                      hint: 'Phone number',
+                      controller: phoneController,
+                    ),
+                    const SizedBox(height: 14),
 
-              AppInput(
-                hint: 'Email address',
-                controller: emailController,
-              ),
-              const SizedBox(height: 14),
+                    AppInput(
+                      hint: 'Email address',
+                      controller: emailController,
+                    ),
+                    const SizedBox(height: 14),
 
-              AppInput(
-                hint: 'Password',
-                obscure: true,
-                controller: passwordController,
-              ),
-              const SizedBox(height: 24),
+                    AppInput(
+                      hint: 'Password',
+                      obscure: true,
+                      controller: passwordController,
+                    ),
+                    const SizedBox(height: 22),
 
-              SizedBox(
-                width: double.infinity,
-                child: AnimatedPrimaryButton(
-                  text: 'Continue',
-                  onTap: () {
-                    // TODO: Implement register logic
-                  },
+                    SizedBox(
+                      width: double.infinity,
+                      child: AnimatedPrimaryButton(
+                        text: 'Continue',
+                        onTap: () {
+                          // TODO: Implement register logic
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],

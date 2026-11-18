@@ -16,38 +16,42 @@ class CheckoutReviewView extends StatelessWidget {
     final ordersCtrl = Get.find<OrdersController>();
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF7F8FA),
+      backgroundColor: const Color(0xFFF7F7FB),
       appBar: AppBar(
-        elevation: 0,
         backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
         title: const Text(
           "Review Order",
-          style: TextStyle(
-            fontSize: 20,
-            fontWeight: FontWeight.w700,
-          ),
+          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
         ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.black12.withValues(alpha: 0.06)),
+        ),
       ),
       body: Padding(
-        padding: const EdgeInsets.all(18),
+        padding: const EdgeInsets.fromLTRB(16, 14, 16, 16),
         child: Column(
           children: [
-            // 🟦 Items List
+            // Items List
             Expanded(
               child: ListView(
                 children: cart.items.values.map((item) {
+                  final total =
+                  (item.product.price * item.qty.value).toStringAsFixed(2);
+
                   return Container(
                     margin: const EdgeInsets.only(bottom: 12),
                     padding: const EdgeInsets.all(12),
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(18),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.black.withOpacity(0.05),
-                          blurRadius: 12,
+                          color: Colors.black.withValues(alpha: 0.05),
+                          blurRadius: 14,
                           offset: const Offset(0, 6),
                         ),
                       ],
@@ -64,8 +68,6 @@ class CheckoutReviewView extends StatelessWidget {
                           ),
                         ),
                         const SizedBox(width: 12),
-
-                        // Product Details
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,33 +75,32 @@ class CheckoutReviewView extends StatelessWidget {
                               Text(
                                 item.product.name,
                                 style: const TextStyle(
-                                  fontSize: 16.5,
-                                  fontWeight: FontWeight.w700,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w800,
                                   color: Colors.black87,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 6),
                               Text(
-                                "\$${item.product.price.toStringAsFixed(2)} x ${item.qty.value}",
-                                style: TextStyle(
-                                  fontSize: 14.5,
-                                  color: Colors.grey.shade600,
-                                  fontWeight: FontWeight.w500,
+                                "\$${item.product.price.toStringAsFixed(2)}  ×  ${item.qty.value}",
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
                         ),
-
-                        const SizedBox(width: 10),
-
-                        // Total per item
+                        const SizedBox(width: 8),
                         Text(
-                          "\$${(item.product.price * item.qty.value).toStringAsFixed(2)}",
+                          "\$$total",
                           style: const TextStyle(
-                            fontSize: 15.5,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xFF1E1E1E),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w900,
+                            color: Colors.black87,
                           ),
                         ),
                       ],
@@ -109,62 +110,48 @@ class CheckoutReviewView extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 10),
-
-            // 🟩 Summary Card
+            // Summary Card
             Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(18),
+                borderRadius: BorderRadius.circular(20),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withOpacity(0.05),
-                    blurRadius: 12,
-                    offset: const Offset(0, 6),
+                    color: Colors.black.withValues(alpha: 0.06),
+                    blurRadius: 18,
+                    offset: const Offset(0, -2),
                   ),
                 ],
               ),
               child: Column(
                 children: [
-                  const SizedBox(height: 4),
                   _priceRow(
-                    "Subtotal",
-                    "\$${cart.subtotal.toStringAsFixed(2)}",
-                  ),
+                      "Subtotal", "\$${cart.subtotal.toStringAsFixed(2)}"),
                   _priceRow("Delivery", "\$3.00"),
                   _priceRow("Tax", "\$0.00"),
-                  const Padding(
-                    padding: EdgeInsets.symmetric(vertical: 10),
-                    child: Divider(thickness: 1),
-                  ),
+                  const Divider(height: 22),
                   _priceRow(
                     "Total",
-                    "\$${(cart.subtotal + 3).toStringAsFixed(2)}",
+                    "\$${(cart.subtotal + 8).toStringAsFixed(2)}",
                     bold: true,
                   ),
                 ],
               ),
             ),
 
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
 
-            // 🟦 Place Order Button
+            // Place Order Button
             SizedBox(
               width: double.infinity,
-              height: 54,
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF3B82F6),
-                  foregroundColor: Colors.white,
-                  elevation: 0,
+                  padding: const EdgeInsets.symmetric(vertical: 16),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16),
+                    borderRadius: BorderRadius.circular(14),
                   ),
-                  textStyle: const TextStyle(
-                    fontSize: 16.5,
-                    fontWeight: FontWeight.w700,
-                  ),
+                  elevation: 0,
                 ),
                 onPressed: () {
                   // create new order
@@ -173,7 +160,7 @@ class CheckoutReviewView extends StatelessWidget {
                     id: DateTime.now().millisecondsSinceEpoch.toString(),
                     date: DateTime.now(),
                     items: cart.items.values.toList(),
-                    total: cart.subtotal + 3,
+                    total: cart.subtotal + 8,
                   );
 
 // Build invoice summary text
@@ -209,11 +196,12 @@ class CheckoutReviewView extends StatelessWidget {
 // navigate to success screen
                   Get.offAllNamed(AppRoutes.orderSuccess);
                 },
-                child: const Text("Place Order"),
+                child: const Text(
+                  "Place Order",
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                ),
               ),
             ),
-
-            const SizedBox(height: 14),
           ],
         ),
       ),
@@ -222,24 +210,24 @@ class CheckoutReviewView extends StatelessWidget {
 
   static Widget _priceRow(String label, String value, {bool bold = false}) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: const EdgeInsets.symmetric(vertical: 5),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(
             label,
             style: TextStyle(
-              fontSize: bold ? 16.5 : 15.5,
-              fontWeight: bold ? FontWeight.w800 : FontWeight.w600,
-              color: bold ? Colors.black87 : Colors.grey.shade700,
+              fontSize: bold ? 16 : 14,
+              fontWeight: bold ? FontWeight.w900 : FontWeight.w600,
+              color: Colors.black87,
             ),
           ),
           Text(
             value,
             style: TextStyle(
-              fontSize: bold ? 16.5 : 15.5,
-              fontWeight: bold ? FontWeight.w800 : FontWeight.w600,
-              color: bold ? const Color(0xFF3B82F6) : Colors.black87,
+              fontSize: bold ? 16 : 14,
+              fontWeight: bold ? FontWeight.w900 : FontWeight.w700,
+              color: Colors.black87,
             ),
           ),
         ],

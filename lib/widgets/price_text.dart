@@ -14,7 +14,7 @@ class PriceText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = const Color(0xFF7A5CF4);
+    const primary = Color(0xFF7A5CF4);
 
     return Row(
       children: [

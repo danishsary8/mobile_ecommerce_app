@@ -9,38 +9,45 @@ class OrderSuccessView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 32),
+          padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 28),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
             children: [
+              const SizedBox(height: 30),
 
-              const SizedBox(height: 40),
-
-              // ✅ Success Icon
+              // ✅ Success Icon (better shadow)
               Container(
-                height: 144,
-                width: 144,
+                height: 150,
+                width: 150,
                 decoration: BoxDecoration(
-                  color: AppColors.primary.withOpacity(0.15),
+                  color: AppColors.primary.withValues(alpha: 0.12),
                   shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColors.primary.withValues(alpha: 0.18),
+                      blurRadius: 18,
+                      offset: const Offset(0, 8),
+                    ),
+                  ],
                 ),
-                child: Icon(
+                child: const Icon(
                   Icons.check_circle_outline,
                   color: AppColors.primary,
                   size: 100,
                 ),
               ),
 
-              const SizedBox(height: 30),
+              const SizedBox(height: 26),
 
               const Text(
                 "Order Successfully Placed!",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 22,
-                  fontWeight: FontWeight.bold,
+                  fontWeight: FontWeight.w900,
+                  color: Colors.black87,
                 ),
               ),
 
@@ -52,22 +59,28 @@ class OrderSuccessView extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.black54,
                   fontSize: 15,
+                  height: 1.5,
                 ),
               ),
 
-              const SizedBox(height: 40),
+              const Spacer(),
 
               // ⭐ Track Order
               SizedBox(
                 width: double.infinity,
                 child: ElevatedButton.icon(
                   icon: const Icon(Icons.local_shipping_outlined),
-                  label: const Text("Track Order"),
+                  label: const Text(
+                    "Track Order",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
+                  ),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.surface,
+                    backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 16),
+                    elevation: 0,
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
                   onPressed: () {
                     // Implement later if you want order tracking
@@ -83,20 +96,24 @@ class OrderSuccessView extends StatelessWidget {
                 child: OutlinedButton(
                   style: OutlinedButton.styleFrom(
                     foregroundColor: AppColors.primary,
-                    side: BorderSide(color: AppColors.primary),
+                    side: const BorderSide(color: AppColors.primary),
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)),
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    backgroundColor: Colors.white,
                   ),
                   onPressed: () {
                     Get.offAllNamed(AppRoutes.main);
                   },
                   child: const Text(
                     "Continue Shopping",
-                    style: TextStyle(fontSize: 16),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
+
+              const SizedBox(height: 10),
             ],
           ),
         ),

@@ -33,15 +33,28 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
 
   @override
   Widget build(BuildContext context) {
+    final primary = Theme.of(context).primaryColor;
+
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       appBar: AppBar(
-        title: const Text('Shipping Address'),
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Shipping Address',
+          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+        ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.black12.withValues(alpha: 0.06)),
+        ),
       ),
       body: SafeArea(
         child: Column(
           children: [
-            const SizedBox(height: 18),
+            const SizedBox(height: 14),
 
             Expanded(
               child: ListView.builder(
@@ -50,34 +63,46 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
                 itemBuilder: (context, index) {
                   final item = addresses[index];
                   final isSelected = index == selectedIndex;
+
                   return GestureDetector(
                     onTap: () => setState(() => selectedIndex = index),
                     child: Container(
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: isSelected ? Colors.white : Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
                         border: Border.all(
                           width: 1.6,
-                          color: isSelected
-                              ? Theme.of(context).primaryColor
-                              : Colors.transparent,
+                          color: isSelected ? primary : Colors.black12,
                         ),
                         boxShadow: [
-                          if (isSelected)
-                            BoxShadow(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.15),
-                              blurRadius: 8,
-                              offset: const Offset(0, 3),
-                            ),
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 14,
+                            offset: const Offset(0, 6),
+                          ),
                         ],
                       ),
                       child: Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          Container(
+                            width: 42,
+                            height: 42,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? primary.withValues(alpha: 0.12)
+                                  : Colors.grey.shade100,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              Icons.location_on_outlined,
+                              color: isSelected ? primary : Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(width: 12),
+
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -86,20 +111,23 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
                                   item['title']!,
                                   style: TextStyle(
                                     fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: isSelected
-                                        ? Theme.of(context).primaryColor
-                                        : Colors.black87,
+                                    fontWeight: FontWeight.w800,
+                                    color: isSelected ? primary : Colors.black87,
                                   ),
                                 ),
-                                const SizedBox(height: 4),
+                                const SizedBox(height: 6),
                                 Text(
                                   item['address']!,
-                                  style: const TextStyle(fontSize: 15),
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w600,
+                                    color: Colors.black87,
+                                  ),
                                 ),
+                                const SizedBox(height: 2),
                                 Text(
                                   item['city']!,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 14,
                                     color: Colors.black54,
                                   ),
@@ -107,10 +135,11 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
                               ],
                             ),
                           ),
+
                           if (isSelected)
                             Icon(
                               Icons.check_circle,
-                              color: Theme.of(context).primaryColor,
+                              color: primary,
                               size: 24,
                             ),
                         ],
@@ -121,18 +150,27 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
               ),
             ),
 
-            const SizedBox(height: 10),
+            const SizedBox(height: 8),
 
             // ===== Add New Address Button =====
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: SizedBox(
                 width: double.infinity,
-                child: TextButton.icon(
-                  icon: const Icon(Icons.add_location_alt),
+                child: OutlinedButton.icon(
+                  icon: const Icon(Icons.add_location_alt_outlined),
                   label: const Text(
                     'Add New Address',
-                    style: TextStyle(fontSize: 18),
+                    style: TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                  ),
+                  style: OutlinedButton.styleFrom(
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(14),
+                    ),
+                    side: BorderSide(color: primary.withValues(alpha: 0.35)),
+                    foregroundColor: primary,
+                    backgroundColor: Colors.white,
                   ),
                   onPressed: () {
                     // TODO: Navigate to an “Add Address” screen
@@ -145,23 +183,16 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
 
             // ===== Continue Button =====
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 18),
               child: SizedBox(
                 width: double.infinity,
-                height: 54,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF3B82F6),
-                    foregroundColor: Colors.white,
-                    elevation: 0,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(14),
                     ),
-                  ).copyWith(
-                    shadowColor: MaterialStateProperty.all(
-                      const Color(0xFF3B82F6).withOpacity(0.35),
-                    ),
+                    elevation: 0,
                   ),
                   onPressed: selectedIndex == -1
                       ? null
@@ -170,17 +201,13 @@ class _CheckoutAddressViewState extends State<CheckoutAddressView> {
                   },
                   child: const Text(
                     "Continue",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      letterSpacing: 0.3,
-                    ),
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                   ),
                 ),
               ),
             ),
 
-            const SizedBox(height: 22),
+            const SizedBox(height: 16),
           ],
         ),
       ),

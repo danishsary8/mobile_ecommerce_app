@@ -37,23 +37,49 @@ class _CheckoutPaymentViewState extends State<CheckoutPaymentView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       appBar: AppBar(
-        title: const Text('Payment Method'),
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        elevation: 0,
+        title: const Text(
+          'Payment Method',
+          style: TextStyle(fontWeight: FontWeight.w800, fontSize: 18),
+        ),
         centerTitle: true,
+        bottom: PreferredSize(
+          preferredSize: const Size.fromHeight(1),
+          child: Container(height: 1, color: Colors.black12.withValues(alpha: 0.06)),
+        ),
       ),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+          padding: const EdgeInsets.fromLTRB(16, 16, 16, 16),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              const SizedBox(height: 8),
+              const Text(
+                "Choose Payment",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 6),
+              const Text(
+                "Select your preferred payment method.",
+                style: TextStyle(fontSize: 14, color: Colors.black54),
+              ),
+              const SizedBox(height: 16),
 
               // ========== Payment Options ==========
               Column(
                 children: methods.map((method) {
                   final isSelected = method['id'] == selectedMethod;
-                  return GestureDetector(
+
+                  return InkWell(
+                    borderRadius: BorderRadius.circular(18),
                     onTap: () {
                       setState(() {
                         selectedMethod = method['id'];
@@ -61,45 +87,58 @@ class _CheckoutPaymentViewState extends State<CheckoutPaymentView> {
                     },
                     child: Container(
                       margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(14),
                       decoration: BoxDecoration(
-                        color: isSelected
-                            ? AppColors.primary.withOpacity(0.1)
-                            : Colors.grey.shade100,
-                        borderRadius: BorderRadius.circular(14),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(18),
                         border: Border.all(
-                          color: isSelected
-                              ? AppColors.primary
-                              : Colors.transparent,
-                          width: 1.8,
+                          color: isSelected ? AppColors.primary : Colors.black12,
+                          width: isSelected ? 2 : 1.2,
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withValues(alpha: 0.05),
+                            blurRadius: 14,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
                       ),
                       child: Row(
                         children: [
-                          Icon(method['icon'],
-                              size: 28,
+                          Container(
+                            width: 44,
+                            height: 44,
+                            decoration: BoxDecoration(
+                              color: isSelected
+                                  ? AppColors.primary.withValues(alpha: 0.12)
+                                  : Colors.grey.shade100,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Icon(
+                              method['icon'],
+                              size: 22,
                               color: isSelected
                                   ? AppColors.primary
-                                  : Colors.black54),
-                          const SizedBox(width: 12),
+                                  : Colors.black54,
+                            ),
+                          ),
+                          const SizedBox(width: 14),
                           Expanded(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
                                   method['title'],
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w600,
-                                    color: isSelected
-                                        ? AppColors.primary
-                                        : Colors.black87,
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    fontWeight: FontWeight.w800,
+                                    color: Colors.black87,
                                   ),
                                 ),
                                 const SizedBox(height: 4),
                                 Text(
                                   method['subtitle'],
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     fontSize: 13,
                                     color: Colors.black54,
                                   ),
@@ -108,8 +147,10 @@ class _CheckoutPaymentViewState extends State<CheckoutPaymentView> {
                             ),
                           ),
                           if (isSelected)
-                            Icon(Icons.check_circle,
-                                color: AppColors.primary),
+                            const Icon(
+                              Icons.check_circle,
+                              color: AppColors.primary,
+                            ),
                         ],
                       ),
                     ),
@@ -120,17 +161,18 @@ class _CheckoutPaymentViewState extends State<CheckoutPaymentView> {
               const Spacer(),
 
               // ========== Continue Button ==========
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
+              SizedBox(
+                width: double.infinity,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: selectedMethod == null
                         ? Colors.grey
                         : AppColors.primary,
-                    minimumSize: const Size.fromHeight(50),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(14),
                     ),
+                    elevation: 0,
                   ),
                   onPressed: selectedMethod == null
                       ? null
@@ -141,14 +183,13 @@ class _CheckoutPaymentViewState extends State<CheckoutPaymentView> {
                     "Continue",
                     style: TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                      fontWeight: FontWeight.w800,
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 24),
+              const SizedBox(height: 16),
             ],
           ),
         ),

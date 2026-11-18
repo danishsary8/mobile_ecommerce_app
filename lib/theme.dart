@@ -15,10 +15,9 @@ class AppTheme {
     scaffoldBackgroundColor: AppColors.background,
     colorScheme: const ColorScheme.light(
       primary: AppColors.primary,
-      background: AppColors.background,
       surface: AppColors.surface,
       onPrimary: Colors.white,
-      onBackground: AppColors.text,
+      onSurface: AppColors.text,
     ),
     textTheme: GoogleFonts.poppinsTextTheme(),
     appBarTheme: const AppBarTheme(
@@ -47,10 +46,9 @@ class AppTheme {
     textTheme: GoogleFonts.poppinsTextTheme(ThemeData.dark().textTheme),
     colorScheme: const ColorScheme.dark(
       primary: AppColors.primary,
-      background: Color(0xFF121212),
       surface: Color(0xFF1E1E1E),
       onPrimary: Colors.white,
-      onBackground: Colors.white,
+      onSurface: Colors.white,
     ),
   );
 }

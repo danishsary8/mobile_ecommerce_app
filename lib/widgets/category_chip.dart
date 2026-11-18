@@ -12,7 +12,7 @@ class CategoryChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final primary = const Color(0xFF7A5CF4);
+    const primary = Color(0xFF7A5CF4);
 
     return Container(
       margin: const EdgeInsets.only(right: 10),
@@ -26,7 +26,7 @@ class CategoryChip extends StatelessWidget {
         boxShadow: isSelected
             ? [
           BoxShadow(
-            color: primary.withOpacity(0.2),
+            color: primary.withValues(alpha: 0.2),
             blurRadius: 6,
             offset: const Offset(0, 3),
           ),

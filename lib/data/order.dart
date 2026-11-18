@@ -1,7 +1,5 @@
 import 'package:clothing_app/controllers/cart_controller.dart';
 
-import 'product.dart';
-
 class Order {
   final String id;
   final DateTime date;

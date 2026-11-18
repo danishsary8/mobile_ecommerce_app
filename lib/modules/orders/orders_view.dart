@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/orders_controller.dart';
 import '../../data/order.dart';
-import '../order_details/order_details_view.dart';
 
 class OrdersView extends StatelessWidget {
   const OrdersView({super.key});

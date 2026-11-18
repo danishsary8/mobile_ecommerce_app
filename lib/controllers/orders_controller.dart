@@ -3,7 +3,6 @@ import 'package:clothing_app/data/demo_products.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import '../data/order.dart';
-import '../data/product.dart';
 
 class OrdersController extends GetxController {
   final box = GetStorage();

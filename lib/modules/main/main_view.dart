@@ -121,7 +121,7 @@ class _MainViewState extends State<MainView> {
           },
           height: 60,
           backgroundColor: Colors.white,
-          indicatorColor: AppColors.primary.withOpacity(0.10),
+          indicatorColor: AppColors.primary.withValues(alpha: 0.10),
           destinations: [
             const NavigationDestination(
               icon: Icon(Icons.home_filled),

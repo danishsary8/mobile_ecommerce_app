@@ -36,13 +36,13 @@ class _AnimatedPrimaryButtonState extends State<AnimatedPrimaryButton> {
           duration: const Duration(milliseconds: 160),
           height: 52,
           decoration: BoxDecoration(
-            color: primary.withOpacity(_isHover ? 0.95 : 1),
+            color: primary.withValues(alpha: _isHover ? 0.95 : 1),
             borderRadius: BorderRadius.circular(16),
             boxShadow: _isPressed
                 ? []
                 : [
               BoxShadow(
-                color: primary.withOpacity(0.35),
+                color: primary.withValues(alpha: 0.35),
                 blurRadius: 16,
                 offset: const Offset(0, 8),
               ),

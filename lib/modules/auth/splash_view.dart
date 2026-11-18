@@ -22,7 +22,7 @@ class _SplashViewState extends State<SplashView> {
   Widget build(BuildContext context) {
     const primary = Color(0xFF7A5CF4);
 
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: primary,
       body: Center(
         child: Text(

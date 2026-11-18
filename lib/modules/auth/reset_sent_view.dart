@@ -12,39 +12,55 @@ class ResetSentView extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Scaffold(
+      backgroundColor: const Color(0xFFF7F7FB),
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+          padding: const EdgeInsets.symmetric(horizontal: 22),
           child: Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
                 Container(
-                  height: 120,
-                  width: 120,
+                  height: 140,
+                  width: 140,
                   decoration: BoxDecoration(
-                    color: theme.colorScheme.primary.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(24),
+                    color: theme.colorScheme.primary.withValues(alpha: 0.12),
+                    shape: BoxShape.circle,
+                    boxShadow: [
+                      BoxShadow(
+                        color: theme.colorScheme.primary.withValues(alpha: 0.18),
+                        blurRadius: 18,
+                        offset: const Offset(0, 8),
+                      ),
+                    ],
                   ),
                   child: Icon(
                     Icons.mark_email_read_rounded,
                     color: theme.colorScheme.primary,
-                    size: 64,
+                    size: 70,
                   ),
                 ),
-                const SizedBox(height: 24),
+                const SizedBox(height: 22),
                 Text(
-                  'Email Sent',
+                  'Email Sent 📩',
                   style: theme.textTheme.titleLarge?.copyWith(
-                    fontWeight: FontWeight.bold,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 22,
+                    color: Colors.black87,
                   ),
-                ),
-                const SizedBox(height: 8),
-                const Text(
-                  'Check your inbox to reset your password.',
                   textAlign: TextAlign.center,
                 ),
-                const SizedBox(height: 32),
+                const SizedBox(height: 10),
+                const Text(
+                  'Check your inbox to reset your password.\nIf you don’t see it, check Spam folder.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                    height: 1.4,
+                  ),
+                ),
+                const SizedBox(height: 26),
                 SizedBox(
                   width: double.infinity,
                   child: AnimatedPrimaryButton(
