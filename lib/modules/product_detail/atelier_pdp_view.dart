@@ -216,6 +216,49 @@ class _AtelierPdpViewState extends State<AtelierPdpView>
                       ),
                       const SizedBox(height: 8),
 
+                      // Brand & Discount Badge Row
+                      Row(
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                            decoration: BoxDecoration(
+                              color: isDark ? AppColors.surfaceDark : AppColors.surfaceSubtle,
+                              borderRadius: BorderRadius.circular(6),
+                              border: Border.all(
+                                color: isDark ? AppColors.cardBorderDark : AppColors.cardBorderLight,
+                              ),
+                            ),
+                            child: Text(
+                              widget.product.brand.toUpperCase(),
+                              style: const TextStyle(
+                                fontSize: 12,
+                                fontWeight: FontWeight.w900,
+                                letterSpacing: 1.0,
+                                color: AppColors.zandoPrimary,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(width: 8),
+                          if (widget.product.computedDiscountPercent > 0)
+                            Container(
+                              padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                              decoration: BoxDecoration(
+                                color: AppColors.saleRed,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                              child: Text(
+                                '-${widget.product.computedDiscountPercent}% OFF',
+                                style: const TextStyle(
+                                  fontSize: 10,
+                                  fontWeight: FontWeight.w800,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                        ],
+                      ),
+                      const SizedBox(height: 8),
+
                       // Product Title
                       Text(
                         widget.product.title,

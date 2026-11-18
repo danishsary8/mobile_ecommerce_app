@@ -46,7 +46,7 @@ class AtelierApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'ATELIER Haute Couture',
+      title: 'ZANDO Fashion Store',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
       themeMode: ThemeMode.light,

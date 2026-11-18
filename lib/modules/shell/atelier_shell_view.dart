@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../controllers/atelier_controller.dart';
 import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_typography.dart';
 import '../../shared/widgets/liquid_glass_container.dart';
 import '../../shared/widgets/persistent_soundscape_bar.dart';
 
@@ -120,9 +119,9 @@ class _AtelierShellViewState extends State<AtelierShellView>
               children: [
                 _buildNavItem(
                   index: 0,
-                  activeIcon: CupertinoIcons.sparkles,
-                  inactiveIcon: CupertinoIcons.sparkles,
-                  label: 'Editorial',
+                  activeIcon: CupertinoIcons.house_fill,
+                  inactiveIcon: CupertinoIcons.house,
+                  label: 'Home',
                   isActive: activeIndex == 0,
                   controller: controller,
                   isDark: isDark,
@@ -131,7 +130,7 @@ class _AtelierShellViewState extends State<AtelierShellView>
                   index: 1,
                   activeIcon: CupertinoIcons.search,
                   inactiveIcon: CupertinoIcons.search,
-                  label: 'Search',
+                  label: 'Explore',
                   isActive: activeIndex == 1,
                   controller: controller,
                   isDark: isDark,
@@ -153,7 +152,7 @@ class _AtelierShellViewState extends State<AtelierShellView>
                   index: 3,
                   activeIcon: CupertinoIcons.heart_fill,
                   inactiveIcon: CupertinoIcons.heart,
-                  label: 'Saved',
+                  label: 'Wishlist',
                   badgeCount: controller.wishlistProductIds.length,
                   isActive: activeIndex == 3,
                   controller: controller,
@@ -163,7 +162,7 @@ class _AtelierShellViewState extends State<AtelierShellView>
                   index: 4,
                   activeIcon: CupertinoIcons.person_fill,
                   inactiveIcon: CupertinoIcons.person,
-                  label: 'Atelier',
+                  label: 'Account',
                   isActive: activeIndex == 4,
                   controller: controller,
                   isDark: isDark,
@@ -198,7 +197,7 @@ class _AtelierShellViewState extends State<AtelierShellView>
         ),
         decoration: BoxDecoration(
           color: isActive
-              ? (isDark ? Colors.white.withValues(alpha: 0.16) : AppColors.ctaDark)
+              ? AppColors.zandoPrimary
               : Colors.transparent,
           borderRadius: BorderRadius.circular(24),
         ),
@@ -212,15 +211,18 @@ class _AtelierShellViewState extends State<AtelierShellView>
                   isActive ? activeIcon : inactiveIcon,
                   size: 20,
                   color: isActive
-                      ? (isDark ? AppColors.textPrimaryDark : Colors.white)
+                      ? Colors.white
                       : (isDark ? AppColors.textMutedDark : AppColors.textMuted),
                 ),
                 if (isActive) ...[
                   const SizedBox(width: 6),
                   Text(
                     label,
-                    style: AppTypography.microTag(
-                      color: isDark ? AppColors.textPrimaryDark : Colors.white,
+                    style: const TextStyle(
+                      fontSize: 11,
+                      fontWeight: FontWeight.w800,
+                      letterSpacing: 0.5,
+                      color: Colors.white,
                     ),
                   ),
                 ],
@@ -233,7 +235,7 @@ class _AtelierShellViewState extends State<AtelierShellView>
                 child: Container(
                   padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                   decoration: BoxDecoration(
-                    color: AppColors.champagneGold,
+                    color: AppColors.zandoPrimary,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(

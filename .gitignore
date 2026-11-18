@@ -46,3 +46,4 @@ app.*.map.json
 
 # Netlify local state
 .netlify/
+*.zip

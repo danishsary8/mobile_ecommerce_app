@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../core/constants/app_colors.dart';
-import '../../core/constants/app_typography.dart';
 import '../../core/utils/haptic_service.dart';
 import '../shell/atelier_shell_view.dart';
 
@@ -105,37 +104,66 @@ class _AtelierSplashViewState extends State<AtelierSplashView>
                   children: [
                     const SizedBox(height: 20),
                     // Brand Logo
-                    Text(
-                      'A T E L I E R',
-                      style: AppTypography.brandLogo(color: Colors.white),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        RichText(
+                          text: const TextSpan(
+                            children: [
+                              TextSpan(
+                                text: 'ZANDO',
+                                style: TextStyle(
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.w900,
+                                  letterSpacing: 3.0,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              TextSpan(
+                                text: '.',
+                                style: TextStyle(
+                                  fontSize: 36,
+                                  fontWeight: FontWeight.w900,
+                                  color: AppColors.zandoPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(height: 6),
                     const Text(
-                      'PARIS • MILANO • TOKYO',
+                      'FASHION • STREETWEAR • FOOTWEAR',
                       style: TextStyle(
                         fontSize: 10,
                         letterSpacing: 2.5,
-                        fontWeight: FontWeight.w600,
-                        color: AppColors.champagneGold,
+                        fontWeight: FontWeight.w700,
+                        color: AppColors.zandoPrimary,
                       ),
                     ),
 
                     const Spacer(),
 
                     // Tagline
-                    Text(
-                      'Haute Couture &\nContemporary Silhouettes',
+                    const Text(
+                      'Trending Styles &\nEveryday Wardrobe Icons',
                       textAlign: TextAlign.center,
-                      style: AppTypography.displayHero(color: Colors.white),
+                      style: TextStyle(
+                        fontSize: 28,
+                        fontWeight: FontWeight.w800,
+                        height: 1.2,
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 14),
                     Text(
-                      'Curated high-street fashion crafted from the finest double-faced wool, mulberry silk, and raw linen.',
+                      'Shop over 50,000 styles from Nike, Adidas, Zara, Levi’s, Mango & Cotton On with fast delivery and instant checkout.',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontSize: 13,
                         fontWeight: FontWeight.w400,
-                        color: Colors.white.withValues(alpha: 0.8),
+                        color: Colors.white.withValues(alpha: 0.85),
                         height: 1.5,
                       ),
                     ),
@@ -147,19 +175,19 @@ class _AtelierSplashViewState extends State<AtelierSplashView>
                       height: 54,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
+                          backgroundColor: AppColors.zandoPrimary,
+                          foregroundColor: Colors.white,
                           elevation: 0,
                           shape: const StadiumBorder(),
                         ),
                         onPressed: _onEnter,
                         child: const Text(
-                          'EXPLORE COLLECTION',
+                          'START SHOPPING NOW',
                           style: TextStyle(
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
+                            fontSize: 14,
+                            fontWeight: FontWeight.w800,
                             letterSpacing: 1.0,
-                            color: Colors.black,
+                            color: Colors.white,
                           ),
                         ),
                       ),

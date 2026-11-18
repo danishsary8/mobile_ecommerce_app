@@ -17,6 +17,8 @@ class AtelierController extends GetxController {
 
   // Products
   final RxList<Product> allProducts = <Product>[].obs;
+  final RxString selectedDepartment = 'Women'.obs;
+  final RxString selectedBrand = 'All'.obs;
   final RxString selectedCategory = 'All'.obs;
   final RxString searchQuery = ''.obs;
 
@@ -29,7 +31,7 @@ class AtelierController extends GetxController {
   final RxDouble discountPercent = 0.0.obs;
 
   // Filters
-  final Rx<RangeValues> priceRange = const RangeValues(100, 600).obs;
+  final Rx<RangeValues> priceRange = const RangeValues(10, 200).obs;
   final RxList<String> selectedFilterSizes = <String>[].obs;
   final RxString sortBy = 'Featured'.obs;
 
@@ -79,6 +81,40 @@ class AtelierController extends GetxController {
     Get.changeThemeMode(isDarkMode.value ? ThemeMode.dark : ThemeMode.light);
   }
 
+  void selectDepartment(String dept) {
+    HapticService.selection();
+    selectedDepartment.value = dept;
+  }
+
+  void selectBrand(String brand) {
+    HapticService.selection();
+    if (selectedBrand.value == brand) {
+      selectedBrand.value = 'All';
+    } else {
+      selectedBrand.value = brand;
+    }
+  }
+
+  List<String> get availableBrands => [
+    'All',
+    'Nike',
+    'Adidas',
+    'Zara',
+    "Levi's",
+    'Mango',
+    'Cotton On',
+    'Calvin Klein',
+    'Puma',
+    'New Balance',
+    'H&M',
+  ];
+
+  List<Product> get flashDeals =>
+      allProducts.where((p) => p.isFlashDeal || p.computedDiscountPercent >= 40).toList();
+
+  List<Product> get bestSellers =>
+      allProducts.where((p) => p.isBestSeller || p.rating >= 4.8).toList();
+
   void selectCategory(String category) {
     HapticService.light();
     selectedCategory.value = category;
@@ -86,6 +122,21 @@ class AtelierController extends GetxController {
 
   List<Product> get filteredProducts {
     return allProducts.where((p) {
+      // Department filter
+      if (selectedDepartment.value != 'All') {
+        if (selectedDepartment.value == 'Sale') {
+          if (p.computedDiscountPercent == 0 && !p.isFlashDeal) return false;
+        } else if (selectedDepartment.value == 'Brands') {
+          // Keep all or selected brand
+        } else if (p.gender != selectedDepartment.value && p.gender != 'Unisex') {
+          return false;
+        }
+      }
+      // Brand filter
+      if (selectedBrand.value != 'All' &&
+          !p.brand.toLowerCase().contains(selectedBrand.value.toLowerCase())) {
+        return false;
+      }
       // Category filter
       if (selectedCategory.value != 'All' && p.category != selectedCategory.value) {
         return false;
@@ -94,9 +145,10 @@ class AtelierController extends GetxController {
       if (searchQuery.value.trim().isNotEmpty) {
         final q = searchQuery.value.toLowerCase();
         final matchTitle = p.title.toLowerCase().contains(q);
+        final matchBrand = p.brand.toLowerCase().contains(q);
         final matchCategory = p.category.toLowerCase().contains(q);
         final matchDesc = p.description.toLowerCase().contains(q);
-        if (!matchTitle && !matchCategory && !matchDesc) return false;
+        if (!matchTitle && !matchBrand && !matchCategory && !matchDesc) return false;
       }
       // Price filter
       if (p.price < priceRange.value.start || p.price > priceRange.value.end) {
@@ -145,7 +197,7 @@ class AtelierController extends GetxController {
 
   double get discountAmount => subtotal * discountPercent.value;
 
-  double get shippingFee => subtotal > 300 || subtotal == 0 ? 0.0 : 25.0;
+  double get shippingFee => subtotal > 50 || subtotal == 0 ? 0.0 : 9.99;
 
   double get taxAmount => (subtotal - discountAmount) * 0.08;
 
@@ -206,8 +258,13 @@ class AtelierController extends GetxController {
 
   bool applyPromoCode(String code) {
     HapticService.selection();
-    if (code.trim().toUpperCase() == 'ATELIER15') {
-      promoCode.value = 'ATELIER15';
+    final cleanCode = code.trim().toUpperCase();
+    if (cleanCode == 'ZANDO20' || cleanCode == 'SAVE20') {
+      promoCode.value = 'ZANDO20';
+      discountPercent.value = 0.20;
+      return true;
+    } else if (cleanCode == 'ATELIER15' || cleanCode == 'WELCOME15') {
+      promoCode.value = cleanCode;
       discountPercent.value = 0.15;
       return true;
     }

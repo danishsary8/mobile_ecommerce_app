@@ -55,7 +55,7 @@ class AtelierProfileView extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Claire Dubois',
+                        'Sary Danish',
                         style: AppTypography.sectionTitle(
                           color: isDark ? AppColors.textPrimaryDark : AppColors.textPrimaryLight,
                         ),
@@ -70,26 +70,26 @@ class AtelierProfileView extends StatelessWidget {
                           margin: const EdgeInsets.only(top: 4),
                           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
                           decoration: BoxDecoration(
-                            color: AppColors.champagneGold.withValues(alpha: 0.15),
+                            color: AppColors.zandoPrimary.withValues(alpha: 0.15),
                             borderRadius: BorderRadius.circular(12),
-                            border: Border.all(color: AppColors.champagneGold, width: 0.8),
+                            border: Border.all(color: AppColors.zandoPrimary, width: 0.8),
                           ),
                           child: const Row(
                             mainAxisSize: MainAxisSize.min,
                             children: [
-                              Icon(CupertinoIcons.shield_fill, size: 12, color: AppColors.champagneGold),
+                              Icon(CupertinoIcons.star_fill, size: 12, color: AppColors.zandoPrimary),
                               SizedBox(width: 4),
                               Text(
-                                'CERCLE OBSIDIEN (TIER IV)',
+                                'ZANDO VIP (GOLD TIER)',
                                 style: TextStyle(
                                   fontSize: 9,
                                   fontWeight: FontWeight.w800,
                                   letterSpacing: 0.8,
-                                  color: AppColors.champagneGold,
+                                  color: AppColors.zandoPrimary,
                                 ),
                               ),
                               SizedBox(width: 4),
-                              Icon(CupertinoIcons.chevron_right, size: 10, color: AppColors.champagneGold),
+                              Icon(CupertinoIcons.chevron_right, size: 10, color: AppColors.zandoPrimary),
                             ],
                           ),
                         ),

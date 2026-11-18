@@ -20,11 +20,13 @@ class _AtelierSearchViewState extends State<AtelierSearchView> {
   final TextEditingController _searchCtrl = TextEditingController();
 
   final List<String> _recentSearches = [
-    'Wool Trench',
-    'Silk Slip',
-    'Cashmere',
-    'Loafer',
-    'Trousers',
+    'Nike Sneakers',
+    "Levi's 501",
+    'Zara Blazer',
+    'Mango Dress',
+    'Denim Jacket',
+    'Streetwear Hoodie',
+    'Wide Leg Pants',
   ];
 
   @override
@@ -81,7 +83,7 @@ class _AtelierSearchViewState extends State<AtelierSearchView> {
                         TextButton(
                           onPressed: () {
                             HapticService.light();
-                            controller.priceRange.value = const RangeValues(100, 600);
+                            controller.priceRange.value = const RangeValues(10, 200);
                             controller.selectedFilterSizes.clear();
                             controller.sortBy.value = 'Featured';
                             setSheetState(() {});
